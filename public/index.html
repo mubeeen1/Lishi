@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Connector</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { padding: 10px; margin: 10px; }
+        #qrCode { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Enter Your WhatsApp Number</h2>
+    <input type="text" id="phoneNumber" placeholder="e.g., 1234567890">
+    <button onclick="generatePairingCode()">Generate Pairing Code</button>
+    <br>
+    <img id="qrCode" style="display:none;" alt="QR Code">
+
+    <script>
+        async function generatePairingCode() {
+            const response = await fetch("/api/connect");
+            const data = await response.json();
+            if (data.qrCode) {
+                document.getElementById("qrCode").src = data.qrCode;
+                document.getElementById("qrCode").style.display = "block";
+            } else {
+                alert("Failed to generate QR code");
+            }
+        }
+    </script>
+</body>
+</html>
